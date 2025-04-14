@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart - Innovate Store</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        nav {
+            background-color: #444;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            margin: 0 15px;
+            font-size: 1.1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        nav a:hover {
+            background-color: #888;
+        }
+
+        .cart-container {
+            width: 80%;
+            margin: 20px auto;
+            background: white;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        .cart-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .cart-item img {
+            width: 80px;
+            height: auto;
+            border-radius: 5px;
+        }
+
+        .cart-item-info {
+            flex-grow: 1;
+            margin-left: 15px;
+        }
+
+        .cart-item h3 {
+            font-size: 1.2rem;
+        }
+
+        .cart-item p {
+            font-size: 1rem;
+            color: #555;
+        }
+
+        .remove-btn {
+            background-color: #d9534f;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 0.9rem;
+        }
+
+        .remove-btn:hover {
+            background-color: #c9302c;
+        }
+
+        .cart-footer {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .total-price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #d9534f;
+        }
+
+        .clear-cart-btn,
+        .checkout-btn,
+        .ai-bargain-btn,
+        .back-btn {
+            padding: 10px 15px;
+            font-size: 1rem;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            margin: 10px;
+        }
+
+        .clear-cart-btn {
+            background-color: #d9534f;
+            color: white;
+        }
+
+        .clear-cart-btn:hover {
+            background-color: #c9302c;
+        }
+
+        .checkout-btn {
+            background-color: #5cb85c;
+            color: white;
+        }
+
+        .checkout-btn:hover {
+            background-color: #4cae4c;
+        }
+
+        .ai-bargain-btn {
+            background-color: #f0ad4e;
+            color: white;
+        }
+
+        .ai-bargain-btn:hover {
+            background-color: #ec971f;
+        }
+
+        .back-btn {
+            background-color: #0275d8;
+            color: white;
+        }
+
+        .back-btn:hover {
+            background-color: #025aa5;
+        }
+
+        /* Shake Effect for the Cart Total */
+        @keyframes shake {
+            0% {
+                transform: translateX(0);
+            }
+
+            25% {
+                transform: translateX(-5px);
+            }
+
+            50% {
+                transform: translateX(5px);
+            }
+
+            75% {
+                transform: translateX(-5px);
+            }
+
+            100% {
+                transform: translateX(0);
+            }
+        }
+
+        .shake {
+            animation: shake 0.5s ease-in-out;
+        }
+
+        /* AI Typing Animation */
+        .ai-typing {
+            font-size: 1.2rem;
+            color: #5cb85c;
+            margin-top: 15px;
+            white-space: nowrap;
+            overflow: hidden;
+            width: 0;
+            animation: typing 3s steps(30) 1s forwards, blink 0.75s step-end infinite;
+        }
+
+        @keyframes typing {
+            0% {
+                width: 0;
+            }
+
+            100% {
+                width: 100%;
+            }
+        }
+
+        @keyframes blink {
+            50% {
+                border-color: transparent;
+            }
+        }
+
+        /* Text Field for User to Enter Desired Price */
+        .desired-price-container {
+            display: none;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .desired-price-container input {
+            padding: 10px;
+            font-size: 1rem;
+            width: 150px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .desired-price-container button {
+            padding: 10px 15px;
+            font-size: 1rem;
+            margin-top: 10px;
+            border: none;
+            background-color: #5bc0de;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .desired-price-container button:hover {
+            background-color: #31b0d5;
+        }
+
+        /* Discount Message Style */
+        .discount-message {
+            font-size: 1.2rem;
+            color: #5cb85c;
+            text-align: center;
+            margin-top: 15px;
+            opacity: 1 !important;
+            transform: translateY(0);
+            animation: none;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Innovate Store</h1>
+        <p>Your Shopping Cart</p>
+    </header>
+
+    <nav>
+        <a href="store.html">Home</a>
+        <a href="store.html">Shop</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+    </nav>
+
+    <div class="cart-container">
+        <h2 class="cart-title">Your Cart</h2>
+        <div id="cart-items"></div>
+        <div class="cart-footer">
+            <p class="total-price">Total: ₹<span id="cart-total">0</span></p>
+            <button class="clear-cart-btn" onclick="clearCart()">Clear Cart</button>
+            <button class="back-btn" onclick="continueShopping()">Continue Shopping</button>
+            <button class="ai-bargain-btn" onclick="aiBargain()">AI Bargain</button>
+            <button class="checkout-btn" onclick="checkout()">Proceed to Checkout</button>
+        </div>
+
+        <div class="desired-price-container" id="desired-price-container">
+            <label for="desired-price">Enter Desired Price:</label>
+            <input type="number" id="desired-price" placeholder="₹">
+            <button onclick="applyBargain()">Apply Bargain</button>
+        </div>
+    </div>
+
+    <footer>
+        <p style="text-align: center; padding: 15px; background: #333; color: white;">&copy; 2025 Innovate Store. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        function loadCart() {
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+            const cartItemsContainer = document.getElementById("cart-items");
+            const cartTotal = document.getElementById("cart-total");
+
+            cartItemsContainer.innerHTML = "";
+            let total = 0;
+
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = "<p style='text-align:center; font-size: 1.2rem;'>Your cart is empty.</p>";
+                cartTotal.innerText = "0";
+                return;
+            }
+
+            cart.forEach((item, index) => {
+                total += parseFloat(item.price);
+                cartItemsContainer.innerHTML += `
+                    <div class="cart-item">
+                        <img src="${item.img || 'default-image.jpg'}" alt="${item.name}" onerror="this.src='default-image.jpg';">
+                        <div class="cart-item-info">
+                            <h3>${item.name}</h3>
+                            <p>Price: ₹${item.price}</p>
+                        </div>
+                        <button class="remove-btn" onclick="removeFromCart(${index})">Remove</button>
+                    </div>`;
+            });
+
+            cartTotal.innerText = total.toFixed(2);
+        }
+
+        function removeFromCart(index) {
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+            cart.splice(index, 1);
+            localStorage.setItem("cart", JSON.stringify(cart));
+            loadCart();
+        }
+
+        function clearCart() {
+            localStorage.removeItem("cart");
+            loadCart();
+        }
+
+        function checkout() {
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+            if (cart.length === 0) {
+                alert("Your cart is empty!");
+                return;
+            }
+            alert(`Proceeding to checkout. Total: ₹${document.getElementById("cart-total").innerText}`);
+            window.location.href = "address.html";
+        }
+
+        function continueShopping() {
+            window.location.href = "store.html";
+        }
+
+        function aiBargain() {
+            // Show the AI typing effect and then the price input field
+            const aiTyping = document.createElement("div");
+            aiTyping.classList.add("ai-typing");
+            aiTyping.innerText = "AI is analyzing your cart...";
+            document.querySelector('.cart-container').appendChild(aiTyping);
+
+            // After 3 seconds, remove the typing effect and show the input field
+            setTimeout(() => {
+                aiTyping.remove();
+                document.getElementById("desired-price-container").style.display = "block";
+            }, 3000);
+        }
+
+        function applyBargain() {
+            const desiredPrice = parseFloat(document.getElementById("desired-price").value);
+            const cart = JSON.parse(localStorage.getItem("cart")) || [];
+            const total = cart.reduce((sum, item) => sum + item.price, 0);
+
+            if (isNaN(desiredPrice) || desiredPrice <= 0) {
+                alert("Please enter a valid price!");
+                return;
+            }
+
+            const discount = desiredPrice < total ? 0.2 : 0.1; // Discount logic
+
+            const discountAmount = total * discount;
+            const newTotal = total - discountAmount;
+
+            // Show discount feedback
+            const discountMessage = document.createElement("div");
+            discountMessage.classList.add("discount-message");
+            discountMessage.innerHTML = `AI has applied a ${discount * 100}% discount!<br><strong>You saved: ₹${discountAmount.toFixed(2)}</strong><br>New Total: ₹${newTotal.toFixed(2)}`;
+            document.querySelector('.cart-footer').appendChild(discountMessage);
+
+            // Update cart total
+            document.getElementById("cart-total").innerText = newTotal.toFixed(2);
+        }
+
+        loadCart();
+    </script>
+
+</body>
+</html>

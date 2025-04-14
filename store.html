@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Future Fashion Store</title>
+    
+    <!-- Favicon for the title box -->
+    <link rel="icon" href="https://i.postimg.cc/FKmXCTW9/5bab7bf6-4b6a-41a1-a589-77b09278eeea.jpg" type="image/jpeg">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f4f4;
+            line-height: 1.6;
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #333;
+            color: white;
+            padding: 20px;
+            position: relative;
+            animation: slideInFromTop 1s ease-out;
+        }
+
+        @keyframes slideInFromTop {
+            0% { transform: translateY(-100%); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+
+        header .logo {
+            max-width: 100px;
+            height: auto;
+            position: absolute;
+            left: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        header .logo:hover {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        header .header-text {
+            text-align: center;
+            flex-grow: 1;
+        }
+
+        nav {
+            background-color: #444;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            margin: 0 15px;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        nav a:hover {
+            background-color: #888;
+            transform: translateY(-3px);
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background-color: #d9534f;
+            bottom: 0;
+            left: 50%;
+            transition: all 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+            left: 0;
+        }
+
+        .search-filter-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .search-bar input {
+            padding: 8px;
+            font-size: 1rem;
+            border-radius: 5px;
+            border: none;
+            width: 200px;
+            transition: width 0.4s ease;
+        }
+
+        .search-bar input:focus {
+            width: 250px;
+        }
+
+        .search-bar button {
+            background-color: #d9534f;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: transform 0.2s ease;
+        }
+ footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        section#about,
+        section#contact {
+            padding: 50px;
+            background-color: #f9f9f9;
+        }
+
+        section#about h2,
+        section#contact h2 {
+            margin-bottom: 20px;
+        }
+
+        section#contact p {
+            margin-top: 20px;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .contact-form button {
+            background-color: #d9534f;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .contact-form button:hover {
+            background-color: #c9302c;
+        }
+
+        .social-links a {
+            margin-right: 15px;
+            font-size: 24px;
+            color: #333;
+            text-decoration: none;
+        }
+
+        .social-links a:hover {
+            color: #d9534f;
+        }
+
+        .search-bar button:hover {
+            transform: scale(1.05);
+        }
+
+        .filter-bar select {
+            padding: 8px;
+            font-size: 1rem;
+            border-radius: 5px;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .filter-bar select:hover {
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Daily Sales Carousel Section */
+        #daily-sales {
+            background: linear-gradient(to right, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
+            color: white;
+            padding: 50px 20px;
+            position: relative;
+            text-align: left;
+            min-height: 300px;
+            overflow: hidden;
+            animation: fadeIn 1s ease-in;
+        }
+
+        #daily-sales .carousel {
+            display: flex;
+            width: 300%; /* Total width for 3 images */
+            transition: transform 0.5s ease-in-out;
+        }
+
+        #daily-sales .carousel-slide {
+            width: 33.33%; /* Each slide takes 1/3 of the carousel */
+            flex-shrink: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        #daily-sales .sales-content {
+            max-width: 50%;
+            padding-right: 20px;
+        }
+
+        #daily-sales h2 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        #daily-sales h2 span {
+            color: #ffcc00; /* Highlighted price in yellow */
+        }
+
+        #daily-sales p {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        #daily-sales .offer {
+            font-size: 0.9rem;
+            margin-top: 10px;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 5px 10px;
+            display: inline-block;
+            border-radius: 5px;
+        }
+
+        #daily-sales .shop-now-btn {
+            background-color: #ffcc00;
+            color: #333;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 15px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        #daily-sales .shop-now-btn:hover {
+            background-color: #e6b800;
+            transform: scale(1.05);
+        }
+
+        #daily-sales .sales-image {
+            max-width: 40%;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        @media (max-width: 768px) {
+            #daily-sales {
+                flex-direction: column;
+                text-align: center;
+                padding: 30px 10px;
+            }
+
+            #daily-sales .carousel {
+                width: 100%;
+                flex-direction: column;
+            }
+
+            #daily-sales .carousel-slide {
+                width: 100%;
+                margin-bottom: 20px;
+            }
+
+            #daily-sales .sales-content {
+                max-width: 100%;
+                margin-bottom: 20px;
+            }
+
+            #daily-sales .sales-image {
+                max-width: 80%;
+            }
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            padding: 20px;
+        }
+
+        .product {
+            background-color: white;
+            width: 250px;
+            margin: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            padding-bottom: 15px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: fadeInUp 0.5s ease-out;
+            position: relative;
+        }
+
+        @keyframes fadeInUp {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        .product:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .product img {
+            width: 100%;
+            height: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .product img:hover {
+            transform: scale(1.05);
+        }
+
+        .product-info {
+            padding: 15px;
+        }
+
+        .price {
+            font-size: 1.5rem;
+            color: #d9534f;
+            font-weight: bold;
+        }
+
+        .product-options {
+            margin-top: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .product-options select,
+        .product-options input {
+            padding: 5px;
+            font-size: 0.9rem;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .add-to-cart-btn {
+            background-color: #5cb85c;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            font-size: 1rem;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 10px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .add-to-cart-btn:hover {
+            background-color: #4cae4c;
+            transform: scale(1.1);
+            animation: bounce 0.5s;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        .cart-btn {
+            background-color: #008CBA;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: transform 0.3s ease;
+        }
+
+        .cart-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .cart-notification {
+            position: absolute;
+            bottom: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #5cb85c;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            opacity: 0;
+            pointer-events: none;
+            animation: fadeInOut 2s ease-in-out;
+        }
+
+        @keyframes fadeInOut {
+            0% { opacity: 0; transform: translateX(-50%) translateY(10px); }
+            20% { opacity: 1; transform: translateX(-50%) translateY(0); }
+            80% { opacity: 1; transform: translateX(-50%) translateY(0); }
+            100% { opacity: 0; transform: translateX(-50%) translateY(-10px); }
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            width: 100%;
+            margin-top: 20px;
+            animation: fadeIn 1s ease-in;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        section#about,
+        section#contact {
+            padding: 50px;
+            background-color: #f9f9f9;
+            animation: fadeIn 1s ease-in;
+        }
+
+        .product-detail {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .product-detail.active {
+            display: block;
+            animation: fadeInModal 0.5s ease-in;
+        }
+
+        @keyframes fadeInModal {
+            0% { opacity: 0; transform: scale(0.9); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        .product-detail-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 20px;
+            width: 80%;
+            max-width: 800px;
+            border-radius: 8px;
+            position: relative;
+            animation: slideInContent 0.5s ease-out;
+        }
+
+        @keyframes slideInContent {
+            0% { transform: translateY(50px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 2rem;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .close-btn:hover {
+            transform: rotate(90deg);
+        }
+
+        .product-detail img {
+            max-width: 50%;
+            height: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .product-detail img:hover {
+            transform: scale(1.02);
+        }
+
+        .product-detail-info h2 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .product-detail-info .price {
+            font-size: 1.8rem;
+            color: #d9534f;
+        }
+
+        .product-detail-info .description {
+            margin: 20px 0;
+            font-size: 1.1rem;
+        }
+
+        .product-detail-info .reviews {
+            margin-top: 20px;
+        }
+
+        .product-detail-info .reviews p {
+            font-style: italic;
+            animation: fadeIn 0.5s ease-in;
+        }
+        .social-icons {
+            margin-top: 20px;
+        }
+
+        .social-icons a {
+            font-size: 24px;
+            margin: 0 10px;
+            text-decoration: none;
+        }
+
+        /* Individual Icon Colors */
+        .social-icons .linkedin {
+            color: #0077b5; /* LinkedIn Blue */
+        }
+
+        .social-icons .twitter {
+            color: #1DA1F2; /* Twitter Blue */
+        }
+
+        .social-icons .instagram {
+            background: linear-gradient(45deg, #f77737, #feda77, #9013fe, #ff0084);
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+
+        .social-icons .whatsapp {
+            color: #25D366; /* WhatsApp Green */
+        }
+
+        .social-icons a:hover {
+            opacity: 0.8;
+        }
+        .contact-info {
+            background: #e0f7fa;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        .contact-info a {
+            color: #004c8c;
+            text-decoration: none;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <img src="https://i.postimg.cc/FKmXCTW9/5bab7bf6-4b6a-41a1-a589-77b09278eeea.jpg" alt="Future Fashion Store Logo" class="logo">
+        <div class="header-text">
+            <h1>Future Fashion Store</h1>
+            <p>Stylish Clothes for Every Occasion</p>
+        </div>
+    </header>
+
+    <nav>
+        <div>
+            <a href="#home">Home</a>
+            <a href="#shop">Shop</a>
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
+            <a href="Review.html">Review</a>
+ <!-- Updated Contact Us link -->
+        </div>
+        <div class="search-filter-container">
+            <div class="search-bar">
+                <input type="text" placeholder="Search products..." id="searchInput">
+                <button onclick="searchProducts()">Search</button>
+            </div>
+            <div class="filter-bar">
+                <select id="categoryFilter" onchange="filterProducts()">
+                    <option value="">All Categories</option>
+                    <option value="casual">Casual</option>
+                    <option value="formal">Formal</option>
+                    <option value="denim">Denim</option>
+                    <option value="jacket">Jacket</option>
+                    <option value="accessories">Accessories</option>
+                    <option value="tops">Tops</option>
+                </select>
+            </div>
+        </div>
+        <button class="cart-btn" onclick="viewCart()">My Cart</button>
+        <button class="cart-btn" id="loginBtn" onclick="logout()">Logout</button>
+    </nav>
+
+    <div id="home" class="container">
+        <!-- Products will be dynamically loaded here -->
+    </div>
+
+    <!-- About Us Section -->
+    <section id="about">
+        <h2>About Us</h2>
+        <p>Welcome to future fashion! We offer the best fashion for every occasion. Our products are carefully curated to ensure you look and feel great!</p>
+    </section>
+
+    <!-- Contact Us Section -->
+    <section id="contact">
+        <h2>Contact Us</h2>
+        <p>Have any questions? Feel free to reach out!</p>
+        <div class="contact-info">
+            <p>📍 <strong>Address:</strong>Andhra Pradesh state ,Palnadu district,Vadlamudi,Vignan University</p>
+            <p>📧 <strong>Email:</strong> <a href="futurefashion@gmail.com">futurefashion@gmail.com</a></p>
+            <p>📞 <strong>Phone:</strong> +91 7780246322</p>
+        </div>
+        <p>We'd love to hear from you! Fill out the form below, and we will get back to you as soon as possible.</p>
+        <div class="contact-form">
+            <form action="#" method="POST">
+                <input type="text" placeholder="Your Name" id="name" required><br>
+                <input type="email" placeholder="Your Email" id="email" required><br>
+                <textarea placeholder="Your Message" id="message" rows="4" required></textarea><br>
+                <button type="submit">Send Message</button>
+            </form>
+        </div>
+        <p>Follow us on:</p>
+        <div class="social-icons">
+            <a href="https://www.linkedin.com" target="_blank" class="linkedin" title="LinkedIn">
+                <i class="fab fa-linkedin"></i>
+            </a>
+            <a href="https://www.twitter.com" target="_blank" class="twitter" title="Twitter">
+                <i class="fab fa-twitter"></i>
+            </a>
+            <a href="https://www.instagram.com" target="_blank" class="instagram" title="Instagram">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="https://www.whatsapp.com" target="_blank" class="whatsapp" title="WhatsApp">
+                <i class="fab fa-whatsapp"></i>
+            </a>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Innovate Store. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        const products = [
+            {
+                name: "Casual T-shirt",
+                category: "casual",
+                price: "1499",
+                img: "https://cdna.lystit.com/photos/scottsmenswear/87749294/levis--Camo-Batwing-Short-Sleeve-T-shirt.jpeg"
+            },
+{ name: "Men's Byre Multi Full Sleeves Checks Shirt", category: "casual", price:"1899", img: "https://thehouseofrare.com/cdn/shop/files/BYRE-MULTI1201HERO.jpg?v=1739189309" },
+
+             {
+                name: "Yellow Chimes Silver Stainless Steel Bracelet ",
+                category: "accessories",
+                price: "499",
+                img: "https://www.jiomart.com/images/product/original/rv3zgrzsnk/kairangi-by-yellow-chimes-silver-stainless-steel-tough-dude-bracelets-for-men-product-images-rv3zgrzsnk-0-202302051903.jpg?im=Resize=(1000,1000)"
+            },
+{ name:"Arresting 1-Minute Ready To Wear Red Georgette Saree"
+, category: "formal", price:"1999", img:"https://thelotusfab.in/cdn/shop/files/ShrijiAvadh-SC-262-Red_4_150x.jpg?v=1716034328"},
+
+            {
+                name: "LIGE Men's Watch",
+                category: "accessories",
+                price: "1599",
+                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQAKXcJ92EeOV8xVDkhgXn2FkcNt1TMin3YIQ&s"
+            },
+            {
+                name: "Firley Herringbone Tweed Wallop Peak Cap",
+                category: "accessories",
+                price: "799",
+                img: "https://www.cordings.co.uk/eu/media/catalog/product/cache/90cced69a688d3fb8b4ac2887336c7a4/h/e/he343allxx_2.jpg"
+            },
+            {
+                name: "Fire Boltt INVINCIBLE",
+                category: "accessories",
+                price: "1699",
+                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_XN1hpLJEmQ5DtkW61TOrRXcomRkJqqp7Sw&s"
+            },
+            {
+                name: "Apple Watch Series 8",
+                category: "accessories",
+                price: "3499",
+                img: "https://rukminim2.flixcart.com/image/850/1000/xif0q/smartwatch/c/1/i/-original-imaghxg9znekcjhh.jpeg?q=90&crop=false"
+            },
+            {
+                name: "Google Pixel Watch 3",
+                category: "accessories",
+                price: "3299",
+                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGb6he6PodphyF-LruRP7-c-im8MAoPlHQyA&s"
+            },
+            {
+                name: "Noise ColorFit Caliber Smartwatch",
+                category: "accessories",
+                price: "1299",
+                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhUqPcyCFggydwOy3UA4V3lYHT78li1TQRNA&s"
+            },
+            {
+                name: "Duke Stylish Analog Silver Metal Strap Wrist Watch for Women",
+                category: "accessories",
+                price: "2099",
+                img: "https://www.dukeindia.com/cdn/shop/files/DK7002RW02C_1024x1024.jpg?v=1714041549"
+            },
+            {
+                name: "Rolex Watch",
+                category: "accessories",
+                price: "2199",
+                img: "https://watchbox-blog.imgix.net/wp-content/uploads/2021/09/Ladies-Rolex_datejust_pink-dial-1.jpg?auto=format,compress"
+            },
+            {
+                name: "ULTRON Blue Analog Watch",
+                category: "accessories",
+                price: "3599",
+                img: "https://m.media-amazon.com/images/I/61V2qzlewKL.AC_UY1000.jpg"
+            },
+            {
+                name: "LIGE Men's Sports Watch",
+                category: "accessories",
+                price: "1999",
+                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTa_CPSEZfu3WqKycL3C2gL9OKX1DUnr1zP6w&s"
+            },
+
+            {
+                name: "Handmade Gemstone Bracelet",
+                category: "accessories",
+                price: "299",
+                img: "https://vedantsharmaa.in/wp-content/uploads/2021/12/Handmade-Gemstone-Bracelet-3.jpeg"
+            },
+
+            {
+                name: "Enticing Bracelet ",
+                category: "accessories",
+                price: "699",
+                img: "https://cdn.caratlane.com/media/catalog/product/cache/6/image/480x480/9df78eab33525d08d6e5fb8d27136e95/J/T/JT02334-1YP900_11_listfront.jpg"
+            },
+            {
+                name: "Silver-Tone Heart Charm Bracelet",
+                category: "accessories",
+                price: "599",
+                img: "https://belleedge.in/cdn/shop/files/Photoroom-20240730-221710.png?v=1727762856"
+            },
+            {
+                name: "GOLD MEN'S BRACELET",
+                category: "accessories",
+                price: "299",
+                img: "https://5.imimg.com/data5/OO/UM/FN/SELLER-45272018/68d2e2cdb4be8ee660cc53d4cae1ed39.jpg"
+            },
+            {
+                name: "American Tourister Laptop bag",
+                category: "accessories",
+                price: "1499",
+                img: "https://mcprod.hnak.com/media/catalog/product/6/e/6ea4a79b4a66650d2946a11cd714950e8906dc3ba4a00cc3d2c5aa6ef1611540.jpeg?quality=60&fit=bounds&height=&width="
+            },
+            {
+                name: "Trendy Backpacks For Women ",
+                category: "accessories",
+                price: "1599",
+                img: "https://genietravel.com/cdn/shop/files/45DegreeAngle2_3731809d-b075-4bb8-a531-e8447b894615_1200x.jpg?v=1737027793"
+            },
+            {
+                name: "Trawoc Travel Backpack Hiking, Trekking & Camping Rucksack",
+                category: "accessories",
+                price: "1899",
+                img: "https://www.trawoc.com/cdn/shop/files/1_2624caa7-4d80-4bc5-96b3-3ad5265a6087.jpg?v=1736340862"
+            },
+            {
+                name: "SKY RISE Trolley bags Travel Bags, Tourist Bags",
+                category: "accessories",
+                price: "1699",
+                img: "https://rukminim2.flixcart.com/image/850/1000/kzfvzww0/suitcase/j/5/p/trolley-bags-travel-bags-tourist-bags-suitcase-luggage-bags-blue-original-imagbght5z6kh6tf.jpeg?q=90&crop=false"
+            },
+            {
+                name: "American tourist baggage",
+                category: "accessories",
+                price: "1499",
+                img: "https://i5.walmartimages.com/seo/American-Tourister-Cargo-Max-21-Hardside-Carry-on-Spinner-Luggage-Single-Piece-Slate-Blue_3220f19e-c80d-4853-96ce-3abe0b683d24.519c851f0c68a013ceead51bc00426ad.jpeg"
+            },
+            {
+                name: "winter caps",
+                category: "accessories",
+                price: "599",
+                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5N1uwjVvGTCI1ejNLxhex1dChfql5u3otig&s"
+            },
+
+            {
+                name: "Shop Men's Hats & Men's Caps",
+                category: "accessories",
+                price: "599",
+                img: "https://www.fjallraven.com/4aae74/globalassets/catalogs/fjallraven/f8/f847/f84767/f020/fjallraven_tab_hat-_84767-020_a_main_fjr.jpg?width=264&height=264&rmode=BoxPad&bgcolor=fff&quality=100"
+            },
+            {
+                name: "Stylish & Trendy Caps ",
+                category: "accessories",
+                price: "299",
+                img: "https://supervek.in/cdn/shop/files/bucket_1200x.jpg?v=1637213882"
+            },
+            {
+                name: "diamond ring for men online",
+                category: "accessories",
+                price: "19999",
+                img: "https://www.kalyanjewellers.net/images/Jewellery/Rings/images/OLD-ENGLISH-GOLD-RING.jpg"
+            },
+            {
+                name: "Brown Cotton Fabric Full Sleeve shirt", 
+                category: "casual", 
+                price:"1599",  
+                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaCIgS1wbPSVq5JoyXgJPbJ1PyH4HAefdLSg&s"
+             },
+             { 
+                name: "Men's Layerrs Yellow Cotton Fabric Full Sleeves Solid Shirt", 
+                category: "casual",  
+                price:"3099", 
+                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFjPpGHMyR36ehIrUfRIoZbhnBKcygp2eojg&s" 
+              },
+
+              { name: "Mens Maroon Cotton shirt", category: "casual", price:"1699", img: "https://thehouseofrare.com/cdn/shop/files/hERO_9a618bec-ffe2-4f58-8d62-ca15425dfa35.jpg?v=1738908723" },
+{ name: "Men's Turvo Blue Cotton Fabric Shirt", category: "casual", price:"1799", img: "https://thehouseofrare.com/cdn/shop/files/TURVO-BLUE3187.jpg?v=1739168420" },
+{ name: "Rare Rabbit Mens Taverna Green Full Sleeves Checks Shirt ", category: "casual", price:"2399", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSeybK1sb1jeEnhrnPxts_fbZyWHI08tgjHcA&s" },
+{ name: "Men's Corneto Olive Cotton shirt", category: "casual", price:"1299", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSOtTc_L2gF3Qi5c1UIU4sGCOxBt-lJJPLZkA&s" },
+{ name: "Men's Harter Maroon Cotton shirt", category: "casual", price:"1899", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTKwt_7sDHkn9ARaDWUawn0p_1fkSl9H_QgHQ&s" },
+{ name: "Men's Byre Multi Full Sleeves Checks Shirt", category: "casual", price:"1899", img: "https://thehouseofrare.com/cdn/shop/files/BYRE-MULTI1201HERO.jpg?v=1739189309" },
+{ name: "Mens Amos Blue Cotton shirt", category: "casual", price:"1199", img: "https://thehouseofrare.com/cdn/shop/files/AMOS-BLUE-00837.jpg?v=1739167970" },
+{ name: "Men's Herick Multi Cotton shirt", category: "casual", price:"1599", img: "https://thehouseofrare.com/cdn/shop/files/HERICKMULTI7186HERO.jpg?v=1734353948" },
+{ name: "Men's Melfi Light Brown Cotton shirt", category: "casual", price:"1599", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRwlIgF9BD83ugrFZEN2JRjwQu9CxhcL4h2zw&s" },
+{ name: "Men's Regular Fit Cotton Twill Casual Shirt", category: "casual", price:"2199", img: "https://m.media-amazon.com/images/I/71tA718XLxL._AC_UY1100_.jpg" },
+
+{ name: "Peach cotton plain casual shirt", category: "casual", price:"1599", img: "https://pictures.kartmax.in/live/sites/9s145MyZrWdIAwpU0JYS/product-images/u_s_polo_assn_peach_cotton_plain_casual_shirt_1669896174usshtc0061_1.jpg" },
+
+{ name: " Pure Cotton Regular Fit Shirt, Brown", category: "casual", price:"2899", img: "https://cdn11.nnnow.com/web-images/large/styles/H5ZULQ1I5YH/1737454230417/1.jpg" },
+
+
+{ name: "Men Solid Casual White Shirt", category: "casual", price: "1799", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4FAMx3QnD97nH_N5h8_gM4MafIyuWoLagnw&s" },
+
+
+{ name: "Premium Cotton Colour Block Casual Shirt ", category: "casual", price:"1999", img: "https://cdn07.nnnow.com/web-images/large/styles/WNV3NXW8KZL/1685083433115/4.jpg" },
+
+
+{ name: "Plain green cotton shirt", category: "casual", price:"2299", img: "https://pictures.kartmax.in/live/sites/9s145MyZrWdIAwpU0JYS/product-images/u_s_polo_assn_plain_green_cotton_shirt_1680945190uksht0483_1.jpg" },
+
+{ name: "Men's Ronas Navy Cotton Fabric Full Sleeves Solid Shirt", category: "casual", price:"3299", img: "https://thehouseofrare.com/cdn/shop/files/RONAS-NAVY-HERO-18HERO.jpg?v=1696069801" },
+
+
+{ name: "Mens Fullslee Petrol Cotton Fabric Full Sleeves Solid Shirt", category: "casual", price:"1699", img: "https://thehouseofrare.com/cdn/shop/products/HERO_a85c6ad7-ac39-487c-a6b6-4ab525b24104.jpg?v=1739168743" },
+
+
+{ name: " Brown Cotton Fabric Full Sleeve shirt", category: "casual", price:"1599", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaCIgS1wbPSVq5JoyXgJPbJ1PyH4HAefdLSg&s" },
+{ name:"Mustered Color Anarkali Gown With Green Dupatta"
+, category: "formal", price:"1999", img:"https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcQKAVk1gSKkkPTAqQzge14cEtVUa2iOZtQw00pqAuzleMqPZytzHPr_Vwj-Trbv_VuN9CkGdtfjgCPpkMAKOvHcH3utVfpUQG5HJ9pmf8M"},
+{ name:"Navy Off-Shoulder Satin Ball Gown"
+, category: "formal", price:"2800", img:"https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcS1-UmXlYyNlTiTPZkpGHlGat5lA-Ol4MCge0AWuyfsEpMHf6iX4_fkEWe8oUiR61C3GCVodCAwt6j4EZ5nEmPQZ7pltA5Vo9T7JXcJWDuZv-R7A3XAfvqF"},
+{ name:"Blue Printed Cotton Fit and Flare Dress"
+, category: "casual", price:"949", img:"https://www.libas.in/cdn/shop/files/29118O.Main.jpg?v=1738320993&width=1080"},
+{ name: "Men Slim Fit Printed Formal Shirt", category: "formal", price:"1299", img: "https://media-us.landmarkshops.in/cdn-cgi/image/h=831,w=615,q=85,fit=cover/max-new/1000013530385-Green-TEAL-1000013530385_01-2100.jpg" },
+
+{ name: "Purple Structured Contemporary Fit Cotton Formal Shirts", category: "formal", price:"2199", img: "https://myraymond.com/cdn/shop/files/RMSZ13163-V4-1.jpg?v=1725605266" },
+
+{ name: "Men Teal Green Solid Formal Shirt", category: "formal", price:"1499", img: "https://dennison.in/cdn/shop/files/30-4-2417987.jpg?v=1738323586&width=1080" },
+{ name: "Brown Pure Cotton Formal Shirt", category: "formal", price:"1699", img: "https://rajubhaihargovindas.com/12337-large_default/japs-brown-pure-cotton-formal-shirt.jpg" },
+{ name: "Men Solid Formal Black Shirt", category: "formal", price:"999", img: "https://rukminim2.flixcart.com/image/850/1000/xif0q/shirt/8/2/2/xl-51-shirt-full-shirtify-original-imagn5m33kcfuqtp.jpeg?q=20&crop=false" },
+{ name: "Men Slim Fit Formal Shirt", category: "formal", price:"1999", img: "https://assets.ajio.com/medias/sys_master/root/20231012/EeJz/652825b4ddf779151938147d/-473Wx593H-469514976-darkpurple-MODEL5.jpg" },
+{ name: "Navy Blue Pure Cotton Formal Shirt", category: "formal", price:"1899", img: "https://rajubhaihargovindas.com/12365-large_default/japs-navy-blue-pure-cotton-formal-shirt.jpg" },
+{ name: "Van Heusen Men Solid Formal White Shirt", category: "formal", price:"1499", img: "https://ramrajcotton.in/cdn/shop/files/1_423aad6e-f58d-4be7-b85c-21e3bbb5085c.jpg?v=1718081032" },
+{ name: "Formal Beige Solid Shirts for Men", category: "formal", price:"1799", img: "https://www.diogolouis.com/cdn/shop/files/IMG_8905_-_Copy.jpg?v=1721296870&width=3000" },
+{ name: "Sky Blue - Plain Cotton Shirts", category: "formal", price:"2299", img: "https://www.beyoung.in/api/cache/catalog/products/shirt_squre_image_update_14_3_2022/sky_blue_cotton_solid_shirts_for_men_base_02_05_2024_700x933.jpg" },
+{ name:"Night suit set with pyjama"
+, category: "denim", price:"780", img:"https://www.sanskrutihomes.in/cdn/shop/products/IMGL4725.jpg?v=1662015178&width=600"},
+{ name:"Powder Blue Cotton Printed Kaftan and Pajama Set"
+, category: "denim", price:"780", img:"https://www.sanskrutihomes.in/cdn/shop/products/2_eb209574-9910-4b01-b4d8-30566fc52857.jpg?v=1668713814&width=500"},
+
+{ name:"Metallic Embroidered Layered Dress and Dupatta Set"
+, category: "formal", price:"3899", img:"https://wforwoman.com/cdn/shop/files/24AUSP11987-400734.jpg?v=1736242077"},
+{ name:"Pink Straight Kurta With Floral Print"
+, category: "casual", price:"749", img:"https://wforwoman.com/cdn/shop/files/23AUW10254-122845_1_3033b9b6-5c3e-4287-98ea-07a86bf07cac.jpg?v=1734686736"},
+{ name:"Green Cotton Printed Top"
+, category: "casual", price:"1080", img:"https://cdn.shopify.com/s/files/1/0776/0419/2550/files/24FEW30797-123112_1_320x.jpg?v=1720108647?v=1715408891"},
+{ name:"Jassica mustard sharara set"
+, category: "formal", price:"6499", img:"https://idaho-o.com/cdn/shop/files/IMG_2952.jpg?v=1734446401&width=600"},
+{ name:"Collar Pure Cotton Anarkali Kurti"
+, category: "tops", price:"593", img:"https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcSKxO0NwteLggDDcmu0MJKLJyBlApN6N146Chsf07B4Jd30XB_fOAFVdH5jwuA67fY2gR4mmiRmarjLdsdrI3-Jj4KBkMT01J8kvMSEDrV3iW9OVVUicoy4Ag-a&usqp=CAc"},
+{ name:"flare ball gown "
+, category: "Gowns", price:"1250", img:"https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcTzE8HlaYd9TyPmvUex91ZGeN9ve86dZLRp4MDWslagwgC5W_29QfUdELNxg3_lg0OSyf4XnEGtaDVcIDe2TlwPFnph-jBUlxPlTLYrLJPw"},
+{ name:"Girls Checkered Skirt with Top 18673"
+, category: "Western wear", price:"1999", img:"https://peppermint.in/cdn/shop/files/AW24-18673-NavyBlue-G-M-1F4_1024x1024.jpg?v=1738236960"},
+{ name:"Girls Textured Top"
+, category: "Western wear", price:"480", img:"https://peppermint.in/cdn/shop/files/AW24-18399-Black-G-M-1F1_1024x1024.jpg?v=1723123908"},
+{ name:"Girls Foiled Top 18380"
+, category: "Western wear", price:"750", img:"https://peppermint.in/cdn/shop/files/AW24-18380-Pink-G-M-1F1_1024x1024.jpg?v=1727789979"},
+{ name:"White Button Girls"
+, category: "Traditional", price:"850", img:"https://m.media-amazon.com/images/I/61kOlWLPo9L.SX679.jpg"},
+];
+
+        function displayProducts(filteredProducts) {
+            const productContainer = document.getElementById("home");
+            productContainer.innerHTML = "";
+            filteredProducts.forEach(product => {
+                const productElement = document.createElement("div");
+                productElement.classList.add("product");
+                productElement.innerHTML = `
+                    <img src="${product.img}" alt="${product.name}">
+                    <div class="product-info">
+                        <h3>${product.name}</h3>
+                        <p>Category: ${product.category}</p>
+                        <div class="price">&#8377;${product.price}</div>
+                        <button class="add-to-cart-btn" onclick="addToCart('${product.name}', ${product.price}, '${product.img}')">Add to Cart</button>
+                    </div>
+                `;
+                productContainer.appendChild(productElement);
+            });
+        }
+
+function addToCart(name, price, img) {
+    // Ask for size and color
+    let size = prompt("Please select a size (e.g., S, M, L, XL):");
+    let color = prompt("Please select a color (e.g., Red, Blue, Green):");
+
+    // Validate user input
+    if (!size || !color) {
+        alert("Size and color are required to add to the cart!");
+        return;
+    }
+
+    // Retrieve the cart from localStorage, or create a new one if it doesn't exist
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    // Add the product with size and color to the cart
+    cart.push({ name, price, img, size, color });
+
+    // Save the updated cart to localStorage
+    localStorage.setItem("cart", JSON.stringify(cart));
+
+    // Notify the user
+    alert(`${name} (Size: ${size}, Color: ${color}) added to cart!`);
+}
+
+
+        function searchProducts() {
+            const searchInput = document.getElementById("searchInput").value.toLowerCase();
+            const filteredProducts = products.filter(product => product.name.toLowerCase().includes(searchInput));
+            displayProducts(filteredProducts);
+        }
+
+        function filterProducts() {
+            const categoryFilter = document.getElementById("categoryFilter").value;
+            displayProducts(categoryFilter ? products.filter(p => p.category === categoryFilter) : products);
+        }
+
+        function logout() {
+            window.location.href = "logout.html";
+        }
+
+        function viewCart() {
+            window.location.href = "cart.html";
+        }
+
+function paymentoptions(){
+window.location.href= "payment.html";
+}
+
+        displayProducts(products);
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Login & Signup</title>
+    <link rel="stylesheet" href="../styles/login_signup.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            min-height: 100dvh;
+            background-size: cover;
+            background: url('https://png.pngtree.com/background/20210716/original/pngtree-digital-office-background-picture-image_1337979.jpg') no-repeat center center fixed;
+            background-size: cover;
+            animation: backgroundAnimation 10s infinite ease-in-out;
+        }
+
+        @keyframes backgroundAnimation {
+            0% { background-position: 0% 0%; }
+            50% { background-position: 100% 100%; }
+            100% { background-position: 0% 0%; }
+        }
+
+        .container {
+            position: relative;
+            width: 400px;
+            height: 500px;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .form-box {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            padding: 40px;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: white;
+        }
+
+        .login {
+            transform: translateX(0);
+        }
+
+        .signup {
+            transform: translateX(100%);
+        }
+
+        .form-container.show-signup .login {
+            transform: translateX(-100%);
+        }
+
+        .form-container.show-signup .signup {
+            transform: translateX(0);
+        }
+
+        h2 {
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 2em;
+            font-weight: 600;
+        }
+
+        .input-group {
+            position: relative;
+            width: 100%;
+            margin: 20px 0;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            color: #333;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            outline: none;
+            background: white;
+            transition: 0.3s ease-in-out;
+        }
+
+        label {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 16px;
+            color: #999;
+            pointer-events: none;
+            transition: 0.3s ease-in-out;
+            background: white;
+            padding: 0 5px;
+        }
+
+        input:focus ~ label,
+        input:valid ~ label {
+            top: 0;
+            font-size: 12px;
+            color: #2196f3;
+        }
+
+        input:focus,
+        input:valid {
+            border-color: #2196f3;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #2196f3;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+            transform-origin: center;
+        }
+
+        button:hover {
+            background: #1976d2;
+            transform: scale(1.02);
+        }
+
+        p {
+            color: #666;
+            margin-top: 20px;
+        }
+
+        a {
+            color: #2196f3;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: #1976d2;
+        }
+
+        /* Enhanced Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(-10px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .form-box form {
+            animation: fadeIn 0.6s ease-out;
+            width: 100%;
+        }
+
+        .input-group {
+            animation: slideIn 0.5s ease-out forwards;
+            opacity: 0;
+        }
+
+        .input-group:nth-child(1) { animation-delay: 0.1s; }
+        .input-group:nth-child(2) { animation-delay: 0.2s; }
+        .input-group:nth-child(3) { animation-delay: 0.3s; }
+        .input-group:nth-child(4) { animation-delay: 0.4s; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="form-container">
+         <!-- Login Form -->
+            <div class="form-box login">
+                <h2><i class="fas fa-user-circle"></i> Login</h2>
+                <form id="loginForm">
+                    <div class="input-group">
+                        <input type="email" id="loginEmail" required>
+                        <label>Email</label>
+                    </div>
+                    <div class="input-group">
+                        <input type="password" id="loginPassword" required>
+                        <label>Password</label>
+                    </div>
+                    <button type="submit">Login</button>
+                </form>
+                <p>Don't have an account? <a href="#" class="toggle-form">Sign Up</a></p>
+            </div>
+
+            <!-- Signup Form -->
+            <div class="form-box signup">
+                <h2><i class="fas fa-user-plus"></i> Sign Up</h2>
+                <form id="signupForm">
+                    <div class="input-group">
+                        <input type="text" id="signupUsername" required>
+                        <label>Username</label>
+                    </div>
+                    <div class="input-group">
+                        <input type="email" id="signupEmail" required>
+                        <label>Email</label>
+                    </div>
+                    <div class="input-group">
+                        <input type="password" id="signupPassword" required>
+                        <label>Password</label>
+                    </div>
+                    <div class="input-group">
+                        <input type="password" id="signupConfirmPassword" required>
+                        <label>Confirm Password</label>
+                    </div>
+                    <button type="submit">Sign Up</button>
+                </form>
+                <p>Already have an account? <a href="#" class="toggle-form">Login</a></p>
+            </div>
+        </div>
+    </div>
+
+<script type="module">
+    // Import Firebase SDKs
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-analytics.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-auth.js";
+
+    // Firebase configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyCdLjLDG4PvNXN5OLQD5mQkiFjfvcO4ies",
+        authDomain: "future-fashion-store-95ecf.firebaseapp.com",
+        projectId: "future-fashion-store-95ecf",
+        storageBucket: "future-fashion-store-95ecf.firebasestorage.app",
+        messagingSenderId: "681656664403",
+        appId: "1:681656664403:web:60fe9f717d519be6f861a6",
+        measurementId: "G-16S6FS7RQ3"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    const auth = getAuth(app);
+
+    // Handle Signup
+    document.getElementById('signupForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const email = document.getElementById('signupEmail').value;
+        const password = document.getElementById('signupPassword').value;
+        const confirmPassword = document.getElementById('signupConfirmPassword').value;
+
+        if (password !== confirmPassword) {
+            alert('Passwords do not match!');
+            return;
+        }
+
+        createUserWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                alert('Signup successful! You can now log in.');
+                document.querySelector('.form-container').classList.toggle('show-signup');
+            })
+            .catch((error) => {
+                alert(`Error: ${error.message}`);
+            });
+    });
+
+    // Handle Login
+    document.getElementById('loginForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const email = document.getElementById('loginEmail').value;
+        const password = document.getElementById('loginPassword').value;
+
+        signInWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                alert('Login successful!');
+                window.location.href = 'store.html'; // Redirect to store.html
+            })
+            .catch((error) => {
+                alert(`Error: ${error.message}`);
+            });
+    });
+
+    // Toggle between forms
+    document.querySelectorAll('.toggle-form').forEach(button => {
+        button.addEventListener('click', () => {
+            document.querySelector('.form-container').classList.toggle('show-signup');
+        });
+    });
+</script>
+
+</body>
+</html>
